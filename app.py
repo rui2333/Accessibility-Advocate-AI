@@ -29,22 +29,24 @@ if "previous_bundle" not in st.session_state:
 from utils import print_messages, append_and_print
 import dotenv
 
-dotenv.load_dotenv()
+load_dotenv(dotenv_path="/home/user/.ssh/.env")
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
+TOOLHOUSE_API_KEY=os.getenv("TOOLHOUSE_API_KEY")
 
 st.logo("logo.svg")
 
 with st.sidebar:
-    t = Toolhouse(provider=st.session_state.provider)
+    th = Toolhouse(access_token=TOOLHOUSE_API_KEY, provider=st.session_state.provider)
     st.title("Accessibility Adovcate")
     with st.expander("Advanced"):
         llm_choice = st.selectbox("Model", tuple(llms.keys()))
         st.session_state.stream = st.toggle("Stream responses", True)
         user = st.text_input("User", "daniele")
         st.session_state.bundle = st.text_input("Bundle", "default")
-        st.session_state.tools = t.get_tools(bundle=st.session_state.bundle)
+        st.session_state.tools = th.get_tools(bundle=st.session_state.bundle)
 
     try:
-        available_tools = t.get_tools(bundle=st.session_state.bundle)
+        available_tools = th.get_tools(bundle=st.session_state.bundle)
     except NotFoundException:
         available_tools = None
 
