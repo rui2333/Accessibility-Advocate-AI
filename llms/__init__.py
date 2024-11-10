@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from anthropic import Anthropic
+from together import Together
 from groq import Groq
 
 system_prompt="""You are a helpful assistant built by Toolhouse. You have advanced tools at your disposal:
@@ -41,6 +42,10 @@ llms = {
     "Llama 3.1 70B (GroqCloud)": { 
         "provider": "openai", 
         "model": "llama-3.1-70b-versatile", 
+    },
+    "Llama 3.1 90B (Together AI)": { 
+        "provider": "openai", 
+        "model": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", 
     },
     "GPT-4o mini": { 
         "provider": "openai", 
